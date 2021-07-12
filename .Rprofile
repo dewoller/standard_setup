@@ -1,8 +1,22 @@
-## This makes sure that R loads the workflowr package
-## automatically, everytime the project is loaded
-if (requireNamespace("workflowr", quietly = TRUE)) {
-  message("Loading .Rprofile for the current workflowr project")
-  library("workflowr")
-} else {
-  message("workflowr package not installed, please run install.packages(\"workflowr\") to use the workflowr functions")
+wideScreen = function() {
+  options(width=as.numeric(system("tput cols", intern=TRUE))-5)
 }
+
+local({
+  r <- getOption("repos")
+  r["CRAN"] <- "https://cloud.r-project.org"
+  options(repos=r)
+})
+
+library( conflicted)
+library( dotenv )
+conflicted::conflict_prefer("year", "lubridate")
+conflicted::conflict_prefer("month", "lubridate")
+conflicted::conflict_prefer("filter", "dplyr")
+conflicted::conflict_prefer("isoweek", "lubridate")
+conflicted::conflict_prefer("week", "lubridate")
+conflicted::conflict_prefer("wday", "lubridate")
+conflicted::conflict_prefer( 'read_xlsx', 'readxl' )
+conflicted::conflict_prefer("annotate", "ggplot2")
+conflicted::conflict_prefer("lag", "dplyr")
+
